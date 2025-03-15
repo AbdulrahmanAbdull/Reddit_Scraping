@@ -1,6 +1,3 @@
-
-#v4.2
-
 import streamlit as st 
 import praw
 import gspread
@@ -15,7 +12,7 @@ REDDIT_USER_AGENT = "scraping"
 
 # Google Sheets authentication
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS_FILE = "redditdata-453600-61911d4b2c47.json"
+CREDS_FILE = "redditdata-453600-fdf0c713ae3e.json"
 
 # Streamlit UI
 st.title("Reddit Scraper")
@@ -107,4 +104,3 @@ if st.button("Start"):
     if all_posts_data:
         sheet.append_rows(all_posts_data, value_input_option="RAW")
         st.success(f"Successfully saved {len(all_posts_data)} new posts to Google Sheets.")
-
