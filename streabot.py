@@ -40,8 +40,8 @@ if st.button("Reset"):
     st.session_state['saved_keywords'] = ""
     st.success("Input reset.")
 
-if st.button("Restart"):
-    st.experimental_rerun()
+#if st.button("Restart"):
+   # st.experimental_rerun()
 
 if st.button("Start"):
     # Initialize Reddit API
