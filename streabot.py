@@ -12,7 +12,7 @@ REDDIT_USER_AGENT = "scraping"
 
 # Google Sheets authentication
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS_FILE = "redditdata-453600-fdf0c713ae3e.json"
+CREDS_FILE = "redditdata-453600-61911d4b2c47.json"
 
 # Streamlit UI
 st.title("Reddit Scraper")
