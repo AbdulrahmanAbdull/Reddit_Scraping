@@ -3,3 +3,31 @@
 *.toml
 *.key
 *.pem
+
+# Ignore Python cache and virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# Ignore IDE and editor settings
+.vscode/
+.idea/
+*.sublime-workspace
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore data and backups
+*.csv
+*.xlsx
+*.db
+*.sqlite
