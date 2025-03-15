@@ -2,10 +2,3 @@ streamlit
 praw
 gspread
 oauth2client
-st-gsheets-connection
-datetime
-re
-json
-os
-oauth2client.service_account
-ServiceAccountCredentials
