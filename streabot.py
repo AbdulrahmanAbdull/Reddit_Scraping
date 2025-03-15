@@ -1,10 +1,11 @@
+
+#v4.2
+
 import streamlit as st 
 import praw
 import gspread
 import datetime
 import re
-import json
-import os
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Reddit API credentials
@@ -14,6 +15,7 @@ REDDIT_USER_AGENT = "scraping"
 
 # Google Sheets authentication
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+CREDS_FILE = "redditdata-453600-61911d4b2c47.json"
 
 # Streamlit UI
 st.title("Reddit Scraper")
@@ -50,22 +52,8 @@ if st.button("Start"):
         user_agent=REDDIT_USER_AGENT,
     )
 
-    # Load Google Sheets credentials from environment variable
-    google_creds = {
-        "type": "service_account",
-        "project_id": "redditdata-453600",
-        "private_key_id": "61911d4b2c47659333534c214ea1cb8942be59f1",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADAN...\n-----END PRIVATE KEY-----\n",
-        "client_email": "redditdata@redditdata-453600.iam.gserviceaccount.com",
-        "client_id": "115079332793641513378",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/redditdata%40redditdata-453600.iam.gserviceaccount.com",
-        "universe_domain": "googleapis.com"
-    }
-
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(google_creds, SCOPE)
+    # Google Sheets connection
+    creds = ServiceAccountCredentials.from_json_keyfile_name(CREDS_FILE, SCOPE)
     client = gspread.authorize(creds)
     sheet = client.open("redditData").sheet1
 
@@ -119,3 +107,4 @@ if st.button("Start"):
     if all_posts_data:
         sheet.append_rows(all_posts_data, value_input_option="RAW")
         st.success(f"Successfully saved {len(all_posts_data)} new posts to Google Sheets.")
+
