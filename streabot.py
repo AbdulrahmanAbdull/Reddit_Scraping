@@ -1,7 +1,4 @@
-
-#v4.2
-
-import streamlit as st 
+import streamlit as st
 import praw
 import gspread
 import datetime
@@ -13,9 +10,9 @@ REDDIT_CLIENT_ID = "lWFWfRPV8_EHqjRpAdzclA"
 REDDIT_CLIENT_SECRET = "TUfF3yHH80wYOSCvtXajFQ9QkblXmQ"
 REDDIT_USER_AGENT = "scraping"
 
-# Google Sheets authentication
+# Google Sheets authentication using Streamlit secrets
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-CREDS_FILE = "redditdata-453600-fdf0c713ae3e.json"
+CREDS_FILE = st.secrets["google_creds_file"]
 
 # Streamlit UI
 st.title("Reddit Scraper")
@@ -53,7 +50,7 @@ if st.button("Start"):
     )
 
     # Google Sheets connection
-    creds = ServiceAccountCredentials.from_json_keyfile_name(CREDS_FILE, SCOPE)
+    creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["google_creds_file"], SCOPE)
     client = gspread.authorize(creds)
     sheet = client.open("redditData").sheet1
 
@@ -69,6 +66,7 @@ if st.button("Start"):
 
     all_posts_data = []
 
+    # Handling keyword variations
     for kw in keywords:
         variations = [kw, f"{kw}s", f"{kw}es", f"{kw}ks", f"{kw}ing", f"{kw}ed"]
         for var in variations:
@@ -107,4 +105,5 @@ if st.button("Start"):
     if all_posts_data:
         sheet.append_rows(all_posts_data, value_input_option="RAW")
         st.success(f"Successfully saved {len(all_posts_data)} new posts to Google Sheets.")
-
+    else:
+        st.warning("No new posts to save.")
